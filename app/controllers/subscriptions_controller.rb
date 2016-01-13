@@ -9,8 +9,6 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    puts;puts;puts params.inspect;puts;puts;puts
-
     customer = if current_user.stripe_id?
       Stripe::Customer.retrieve(current_user.stripe_id)
     else
@@ -22,9 +20,13 @@ class SubscriptionsController < ApplicationController
       plan: :monthly
     )
 
-    current_user.update(permitted_card_params)
-
-    puts;puts;puts current_user.save;puts;puts;puts
+    current_user.update(
+      stripe_id: customer.id,
+      stripe_subscription_id: subscription.id,
+      card_last_four: params[:card_last_four],
+      card_exp_month: params[:card_exp_month],
+      card_exp_year: params[:card_exp_year],
+      card_brand: params[:card_brand])
 
     redirect_to root_path
   end
