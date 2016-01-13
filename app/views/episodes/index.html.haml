@@ -1,0 +1,4 @@
+%h1.page-header All Episodes
+
+- @episodes.each do |episode|
+  %h3= link_to episode.name, episode

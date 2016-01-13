@@ -4,9 +4,12 @@
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
     %title= content_for?(:title) ? yield(:title) : 'Subscriptions With Stripe'
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Subscriptions With Stripe'}"}
-    = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag 'application'
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track'=>true
+    = javascript_include_tag 'application', media: 'all', 'data-turbolinks-track'=>true
+    = javascript_include_tag 'application', 'https://js.stripe.com/v2/'
     = csrf_meta_tags
+
+    = tag :meta, name: 'stripe-key', content: STRIPE_PUBLIC
   %body
     %header
       = render 'layouts/navigation'

@@ -7,3 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 user = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << user.email
+
+Episode.find_or_create_by(name: "First Episode", description: Faker::Lorem.paragraph)
+Episode.find_or_create_by(name: "Second Episode", description: Faker::Lorem.paragraph)
+Episode.find_or_create_by(name: "Third Episode", description: Faker::Lorem.paragraph)
+Episode.find_or_create_by(name: "Fourth Episode", description: Faker::Lorem.paragraph)
