@@ -1,37 +1,55 @@
 <div class="authform">
-  <h3>Edit <%= resource_name.to_s.humanize %></h3>
+  <h3>Edit Account</h3>
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form'}) do |f| %>
-    <%= devise_error_messages! %>
+  <%= devise_error_messages! %>
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, :autofocus => true, class: 'form-control' %>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for:
+      <%= resource.unconfirmed_email %></div>
+    <% end %>
+  </div>
+  <fieldset>
+    <p>Leave these fields blank if you don't want to change your password.</p>
     <div class="form-group">
-      <%= f.label :email %>
-      <%= f.email_field :email, :autofocus => true, class: 'form-control' %>
-      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-      <% end %>
+      <%= f.label :password %>
+      <%= f.password_field :password, :autocomplete => 'off', class: 'form-control' %>
     </div>
-    <fieldset>
-      <p>Leave these fields blank if you don't want to change your password.</p>
-      <div class="form-group">
-        <%= f.label :password %>
-        <%= f.password_field :password, :autocomplete => 'off', class: 'form-control' %>
-      </div>
-      <div class="form-group">
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
-      </div>
-    </fieldset>
-    <fieldset>
-      <p>You must enter your current password to make changes.</p>
-      <div class="form-group">
-        <%= f.label :current_password %>
-        <%= f.password_field :current_password, class: 'form-control' %>
-      </div>
-    </fieldset>
-    <%= f.submit 'Update', :class => 'button right' %>
+    <div class="form-group">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+  </fieldset>
+  <fieldset>
+    <p>You must enter your current password to make changes.</p>
+    <div class="form-group">
+      <%= f.label :current_password %>
+      <%= f.password_field :current_password, class: 'form-control' %>
+    </div>
+  </fieldset>
+  <%= f.submit 'Update Account', :class => 'button' %>
   <% end %>
-</div>
-<div class="authform">
-<h3>Cancel Account</h3>
-<p>Unhappy? We'll be sad to see you go.</p>
-<%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button right' %>
+
+  <% if current_user_subscribed? %>
+  <h3>Credit Card</h3>
+  <fieldset>
+    <fieldset>
+      <p>Your current card on file is:</p>
+      <div>
+        <%= current_user.card_brand %>
+        **** **** **** <%= current_user.card_last_four %>
+      </div>
+      <div>Expires <%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
+    </fieldset>
+
+    <%= render 'stripe_form', resource: card_path, method: :put, submit_text: "Update Credit Card" %>
+  </fieldset>
+  <% end %>
+
+  <h3>Cancel Account</h3>
+  <fieldset>
+    <p>Unhappy? We'll be sad to see you go.</p>
+    <%= button_to "Cancel my account", registration_path(resource_name), style: 'width:100%', :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button' %>
+  </fieldset>
 </div>

@@ -13,7 +13,9 @@
  *= require_tree .
  *= require_self
  */
-
 input {
   padding-left: 5px;
+}
+.authform form {
+  padding: 24px;
 }
