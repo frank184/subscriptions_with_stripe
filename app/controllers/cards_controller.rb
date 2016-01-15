@@ -4,7 +4,8 @@ class CardsController < ApplicationController
   def update
     customer = Stripe::Customer.retrieve(current_user.stripe_id)
     subscription = customer.subscriptions.retrieve(current_user.stripe_subscription_id)
-    subscription.update(source: params[:stripeToken])
+    subscription.source = params[:stripeToken]
+    subscription.save
 
     current_user.update(
       card_last_four: params[:card_last_four],
