@@ -32,6 +32,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
+    customer = Stripe::Customer.retrieve(current_user.stripe_id)
+    subscription = customer.subscriptions.retrieve(current_user.stripe_subscription_id)
+    subscription.delete
+
+    redirect_to root_path, notice: "Successfully cancelled subscription"
   end
 
 
