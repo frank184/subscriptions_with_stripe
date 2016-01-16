@@ -1,16 +1,4 @@
 module ApplicationHelper
-
-  def generate_submit_text(method)
-    case method
-    when :post
-      "Create"
-    when :put || :patch
-      "Update"
-    else
-      "Submit"
-    end
-  end
-
   # For developmental purposes
   def card_value field
     if Rails.env.development?
@@ -27,4 +15,8 @@ module ApplicationHelper
     end
   end
 
+
+  def card_fields_class
+    "hidden" if current_user.stripe_id?
+  end
 end

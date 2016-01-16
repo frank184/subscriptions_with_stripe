@@ -20,7 +20,14 @@ $(document).on 'ready page:change', ->
   Stripe.setPublishableKey $('meta[name=stripe-key]').attr('content')
   $('#payment-form').off().on 'submit', (event) ->
     $form = $(this)
-    $form.find('button').prop 'disabled', true
-    Stripe.card.createToken $form, stripeResponseHandler
+    if $('.card-fields').hasClass('hidden')
+      $form.get(0).submit()
+    else
+      $form.find('button').prop 'disabled', true
+      Stripe.card.createToken $form, stripeResponseHandler
     false
-  return
+
+  $('.use-different-card').on 'click', ->
+    $('.card-on-file').hide()
+    $('.card-fields').show()
+    $('.card-fields').removeClass('hidden')
