@@ -48,3 +48,5 @@ end
 
 gem 'stripe'
 gem 'stripe_event'
+gem 'receipts'
+gem 'colorize'

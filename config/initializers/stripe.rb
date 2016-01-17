@@ -1,5 +1,14 @@
 Stripe.api_key = STRIPE_SECRET
 
+class WebHookLogger
+  def call(event)
+    puts
+    puts "Received WebHook from Stripe of type ".yellow + event.type.to_s.green
+    puts event.data.object.inspect.to_s.red
+    puts
+  end
+end
+
 class RecordCharges
   def call(event)
     # Capture the Event object from Stripe
@@ -20,4 +29,5 @@ end
 
 StripeEvent.configure do |events|
   events.subscribe 'charge.succeeded', RecordCharges.new
+  events.all WebHookLogger.new
 end
