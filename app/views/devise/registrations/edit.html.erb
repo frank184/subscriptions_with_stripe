@@ -31,15 +31,26 @@
   <%= f.submit 'Update Account', :class => 'button' %>
   <% end %>
 
+
+  <% if current_user.charges.any? %>
+    <h3>Your Previous Charges</h3>
+    <fieldset>
+      <fieldset>
+        <% current_user.charges.each do |charge| %>
+          <div>You were charged <%= number_to_currency (charge.amount / 100.0) %></div>
+          <div><%= charge.card_brand %> **** **** **** <%= charge.card_last_four %></div>
+          <div>Expires <%= charge.card_exp_month %> / <%= charge.card_exp_year %></div>
+        <% end %>
+      </fieldset>
+    </fieldset>
+  <% end %>
+
   <% if current_user_subscribed? %>
   <h3>Credit Card</h3>
   <fieldset>
     <fieldset>
-      <p>Your current card on file is:</p>
-      <div>
-        <%= current_user.card_brand %>
-        **** **** **** <%= current_user.card_last_four %>
-      </div>
+      <div>Your current card on file is:</div>
+      <div><%= current_user.card_brand %> **** **** **** <%= current_user.card_last_four %></div>
       <div>Expires <%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
     </fieldset>
 

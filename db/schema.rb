@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113070828) do
+ActiveRecord::Schema.define(version: 20160117133047) do
+
+  create_table "charges", force: :cascade do |t|
+    t.integer  "user_id",        limit: 4
+    t.float    "amount",         limit: 24
+    t.string   "card_last_four", limit: 255
+    t.string   "card_brand",     limit: 255
+    t.string   "card_exp_month", limit: 255
+    t.string   "card_exp_year",  limit: 255
+    t.string   "stripe_id",      limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "charges", ["stripe_id"], name: "index_charges_on_stripe_id", unique: true, using: :btree
+  add_index "charges", ["user_id"], name: "index_charges_on_user_id", using: :btree
 
   create_table "episodes", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -45,4 +60,5 @@ ActiveRecord::Schema.define(version: 20160113070828) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "charges", "users"
 end

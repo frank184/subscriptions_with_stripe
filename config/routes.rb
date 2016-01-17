@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :users
   resources :episodes
+  
   resource :subscription
   resource :card
+
+  mount StripeEvent::Engine, at: '/stripe/webhook'
 end
