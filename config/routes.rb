@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :episodes
+  resources :charges
 
   resource :subscription
   resource :card
