@@ -2,6 +2,11 @@ class ChargesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_charge, only: [:show]
 
+  # GET /charges
+  def index
+    @charges = current_user.charges.order('created_at desc')
+  end
+
   # GET /charges/1.pdf
   def show
     respond_to do |format|

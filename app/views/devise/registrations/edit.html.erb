@@ -33,16 +33,17 @@
 
 
   <% if current_user.charges.any? %>
-    <h3>Your Previous Charges</h3>
+    <h3>Your Latest Billing</h3>
     <fieldset>
-      <% current_user.charges.each do |charge| %>
+      <% charge = current_user.charges.first %>
         <fieldset>
           <div><b><%= charge.created_at.strftime '%B %d, %Y at %I:%M %P' %></b></div>
           <div>You were charged <%= number_to_currency (charge.amount / 100.0) %></div>
           <div><%= charge.card_brand %> **** **** **** <%= charge.card_last_four %></div>
           <div>Expires <%= charge.card_exp_month %> / <%= charge.card_exp_year %></div>
+          <div><%= link_to 'PDF Format', charge_path(id: charge.id, format: 'pdf') %></div>
         </fieldset>
-      <% end %>
+      <div>For more information visit your <%= link_to "account billing", charges_path %></div>
     </fieldset>
   <% end %>
 

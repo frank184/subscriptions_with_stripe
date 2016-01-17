@@ -1,0 +1,15 @@
+<div class="authform">
+  <h3>Your Previous Charges</h3>
+  <fieldset>
+    <% @charges.each do |charge| %>
+      <fieldset>
+        <div><b><%= charge.created_at.strftime '%B %d, %Y at %I:%M %P' %></b></div>
+        <div>You were charged <%= number_to_currency (charge.amount / 100.0) %></div>
+        <div><%= charge.card_brand %> **** **** **** <%= charge.card_last_four %></div>
+        <div>Expires <%= charge.card_exp_month %> / <%= charge.card_exp_year %></div>
+        <div><%= link_to 'PDF Format', charge_path(id: charge.id, format: 'pdf') %></div>
+      </fieldset>
+    <% end %>
+  </fieldset>
+
+</div>
