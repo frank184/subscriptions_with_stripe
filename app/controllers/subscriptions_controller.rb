@@ -17,7 +17,8 @@ class SubscriptionsController < ApplicationController
 
     subscription = customer.subscriptions.create(
       source: params[:stripeToken],
-      plan: :monthly)
+      plan: :monthly
+    )
 
     options = {
       stripe_id: customer.id,
