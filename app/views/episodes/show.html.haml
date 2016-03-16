@@ -11,3 +11,5 @@
   %h1 SECRET VIDEO
 - else
   = link_to 'Subscribe to Watch', new_subscription_path, class: 'btn btn-primary'
+- if current_user.email.eql?("admin@mail.com")
+  = link_to 'Edit', edit_episode_path(@episode)
